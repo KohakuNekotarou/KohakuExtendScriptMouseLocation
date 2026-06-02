@@ -3,7 +3,6 @@
 // Interface includes:
 #include "ILayoutUIUtils.h"
 #include "IPanelControlData.h"
-#include "IPanorama.h"
 #include "IScript.h"
 #include "IScriptRequestData.h"
 
