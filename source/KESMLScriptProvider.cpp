@@ -21,8 +21,9 @@
 #ifdef WINDOWS
 #pragma comment(lib, "user32.lib")
 #include <windows.h>
+#elif MACINTOSH
+#import <ApplicationServices/ApplicationServices.h>
 #endif
-
 
 class KESMLScriptProvider : public CScriptProvider
 {
@@ -94,14 +95,8 @@ ErrorCode KESMLScriptProvider::AccessGlobalMouseLocation
 		{
 			// ---------------------------------------------------------------------------------------
 			// Append return data
-			if (XYFlg == x)
-			{
-				scriptData.SetInt32(gSysPoint.x);
-			}
-			else if (XYFlg == y)
-			{
-				scriptData.SetInt32(gSysPoint.y);
-			}
+			if (XYFlg == x) scriptData.SetInt32(gSysPoint.x);
+			else if (XYFlg == y) scriptData.SetInt32(gSysPoint.y);
 
 			iScriptRequestData->AppendReturnData(iScript, scriptID, scriptData);
 		}
@@ -112,20 +107,18 @@ ErrorCode KESMLScriptProvider::AccessGlobalMouseLocation
 
 			// ---------------------------------------------------------------------------------------
 			// Scroll
-			int32 int32_point;
+			int32 int32_point, int32_pointX = gSysPoint.x, int32_pointY = gSysPoint.y;
 			status = scriptData.GetInt32(&int32_point);
 			if (status != kSuccess) break;
 
-			#ifdef WINDOWS
-			if (XYFlg == x)
-			{
-				::SetCursorPos(int32_point, gSysPoint.y);
-			}
-			else if (XYFlg == y)
-			{
-				::SetCursorPos(gSysPoint.x, int32_point);
-			}
-			#endif
+			if (XYFlg == x) int32_pointX = int32_point;
+			else if (XYFlg == y) int32_pointY = int32_point;
+
+#ifdef WINDOWS
+			::SetCursorPos(int32_pointX, int32_pointY);
+#elif MACINTOSH
+			::CGWarpMouseCursorPosition(CGPointMake(int32_pointX, int32_pointY));
+#endif
 		}
 		status = kSuccess;
 
@@ -163,14 +156,8 @@ ErrorCode KESMLScriptProvider::AccessPasteboardMouseLocation
 
 			// ---------------------------------------------------------------------------------------
 			// Append return data
-			if (XYFlg == x)
-			{
-				scriptData.SetPMReal(pMPoint_pastboardPoint.X());
-			}
-			else if (XYFlg == y)
-			{
-				scriptData.SetPMReal(pMPoint_pastboardPoint.Y());
-			}
+			if (XYFlg == x) scriptData.SetPMReal(pMPoint_pastboardPoint.X());
+			else if (XYFlg == y) scriptData.SetPMReal(pMPoint_pastboardPoint.Y());
 
 			iScriptRequestData->AppendReturnData(iScript, scriptID, scriptData);
 		}
@@ -185,14 +172,8 @@ ErrorCode KESMLScriptProvider::AccessPasteboardMouseLocation
 			status = scriptData.GetPMReal(&pMReal_point);
 			if (status != kSuccess) break;
 
-			if (XYFlg == x)
-			{
-				pMPoint_pastboardPoint.X(pMReal_point);
-			}
-			else if (XYFlg == y)
-			{
-				pMPoint_pastboardPoint.Y(pMReal_point);
-			}
+			if (XYFlg == x) pMPoint_pastboardPoint.X(pMReal_point);
+			else if (XYFlg == y) pMPoint_pastboardPoint.Y(pMReal_point);
 
 			PMPoint pmPoint_WindowPoint = pMPoint_pastboardPoint;
 			iControlView->ContentToWindowTransform(&pmPoint_WindowPoint);
@@ -201,6 +182,8 @@ ErrorCode KESMLScriptProvider::AccessPasteboardMouseLocation
 
 #ifdef WINDOWS
 			::SetCursorPos(::ToInt32(pmPoint_GlobalPoint.X()), ::ToInt32(pmPoint_GlobalPoint.Y()));
+#elif MACINTOSH
+			::CGWarpMouseCursorPosition(CGPointMake(::ToInt32(pmPoint_GlobalPoint.X()), ::ToInt32(pmPoint_GlobalPoint.Y()));
 #endif
 		}
 		status = kSuccess;
