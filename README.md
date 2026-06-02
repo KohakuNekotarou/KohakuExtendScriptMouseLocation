@@ -16,6 +16,7 @@ $(UI_PLUGIN_LINKLIST)<br>
 on Mac<br>
 Build Phases > Link Binary With Libraries<br>
 DV_WidgetBinLib.dylib<br>
+CoreGraphics.framework<br>
 
 ## extendScript for JavaScript
 ```
