@@ -6,6 +6,12 @@
 We cannot be held responsible for any issues arising from your use of this service.<br>
 Please use it at your own risk.<br>
 
+On Mac, you cannot use downloaded plug-ins directly.<br>
+https://helpx.adobe.com/jp/indesign/kb/indesign-and-macos-catalina.html<br>
+Refer to the above and use Terminal to<br>
+sudo xattr -r -d com.apple.quarantine /Applications/Adobe\ Indesign\ 2026/Plug-ins/KohakuExtendScriptMouseLocation.InDesignPlugin<br>
+Please execute.<br>
+
 note:<br>
 When using ::GetGlobalMouseLocation() on Windows<br>
 Visual Studio : <br>
