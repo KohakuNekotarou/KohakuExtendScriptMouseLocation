@@ -17,7 +17,7 @@ When using ::GetGlobalMouseLocation() on Windows<br>
 Visual Studio : <br>
 Right-click on the project<br>
 Properties > Configuration Properties > Linker > Input > Additional Dependencies<br>
-$(UI_PLUGIN_LINKLIST)<br>
+..\..\..\build\win\objRx64\DV_WidgetBin.lib<br>
 
 on Mac<br>
 Xcode : <br>
