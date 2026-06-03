@@ -27,6 +27,9 @@ CoreGraphics.framework<br>
 
 ## extendScript for JavaScript
 ```
+// Query GlobalMouseLocation.
+// app.kesmlGlobalMouseLocationX;
+
 // Query pasteboardMouseLocation.
 var pasteboardLocationX = app.activeWindow.kesmlPasteboardMouseLocationX;
 var pasteboardLocationY = app.activeWindow.kesmlPasteboardMouseLocationY;
