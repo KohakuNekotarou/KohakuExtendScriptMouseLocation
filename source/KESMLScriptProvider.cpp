@@ -1,6 +1,7 @@
 #include "VCPlugInHeaders.h"
 
 // Interface includes:
+#include "IEventUtils.h"
 #include "ILayoutUIUtils.h"
 #include "IPanelControlData.h"
 #include "IScript.h"
@@ -9,7 +10,6 @@
 // General includes:
 #include "CAlert.h"
 #include "CScriptProvider.h"
-#include "EventUtilities.h" // for GetGlobalMouseLocation
 #include "LayoutUIID.h" // for kLayoutWidgetBoss
 #include "Utils.h"
 
@@ -84,7 +84,7 @@ ErrorCode KESMLScriptProvider::AccessGlobalMouseLocation
 
 	do {
 		// GetGlobalMouseLocation
-		GSysPoint gSysPoint = ::GetGlobalMouseLocation();
+		GSysPoint gSysPoint = Utils<IEventUtils>()->GetGlobalMouseLocation();
 
 		// ---------------------------------------------------------------------------------------
 		// Request
@@ -134,7 +134,7 @@ ErrorCode KESMLScriptProvider::AccessPasteboardMouseLocation
 
 	do {
 		// GetGlobalMouseLocation
-		GSysPoint gSysPoint = ::GetGlobalMouseLocation();
+		GSysPoint gSysPoint = Utils<IEventUtils>()->GetGlobalMouseLocation();
 
 		// ---------------------------------------------------------------------------------------
 		// GetPasteboardMouseLocation
